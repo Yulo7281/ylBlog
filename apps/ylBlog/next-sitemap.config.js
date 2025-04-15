@@ -21,7 +21,7 @@ module.exports = {
       return defaultValue(0.9);
     }
 
-    if (path === '/projects') {
+    if (path === '/stats') {
       return defaultValue(0.9);
     }
 
@@ -31,6 +31,18 @@ module.exports = {
 
     if (path.indexOf('/work') === 0) {
       return defaultValue(0.8);
+    }
+
+    if (path === '/projects') {
+      return defaultValue(0.9);
+    }
+
+    if (path === '/links') {
+      return defaultValue(0.9);
+    }
+
+    if (path === '/feedback') {
+      return defaultValue(0.9);
     }
 
     return defaultValue();

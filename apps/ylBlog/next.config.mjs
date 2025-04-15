@@ -5,18 +5,7 @@ import remarkPlugins from 'remark-plugins';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  redirects: async () => [
-    {
-      source: '/work',
-      destination: '/work/skills-and-tools',
-      permanent: false,
-    },
-    {
-      source: '/docs',
-      destination: '/docs/tailwindcss-accent',
-      permanent: false,
-    },
-  ],
+  output: 'export',
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   reactStrictMode: true,
   images: {
