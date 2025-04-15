@@ -62,7 +62,7 @@ function ProjectsContents() {
                   browserTabs={[
                     {
                       icon: <ReactIcon className="h-4 w-4" />,
-                      title: 'www.yulo.com - nextjsblog',
+                      title: 'www.yulohan.cn - nextjsblog',
                       isActive: currentState === 'nextjsblog',
                       onClick: () => setCurrentState('nextjsblog'),
                     },

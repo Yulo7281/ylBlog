@@ -239,7 +239,7 @@ function Footer() {
           )}
         >
           <div className={clsx('font-semibold')}>
-            &copy; {dayjs().format('YYYY')}, yulo.com 版权所有
+            &copy; {dayjs().format('YYYY')}, yulohan.cn 版权所有
             <div>
               <span>
                 ICP:

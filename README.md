@@ -1,20 +1,18 @@
 <div>
   <h1>
-    Enji Kusnadi
+    ylBlog
     &middot;
-    <img src="https://img.shields.io/website?style=flat-square&url=https%3A%2F%2Fwww.enji.dev"/>
-    <img src="https://img.shields.io/github/deployments/enjidev/enji.dev/production?label=production&style=flat-square"/>
-    <img src="https://img.shields.io/github/commit-activity/m/enjidev/enji.dev?style=flat-square"/>
+    <img src="https://img.shields.io/website?style=flat-square&url=https%3A%2F%2Fwww.yulohan.cn"/>
+    <img src="https://img.shields.io/github/deployments/Yulo7281/ylBlog/production?label=production&style=flat-square"/>
+    <img src="https://img.shields.io/github/commit-activity/m/Yulo7281/ylBlog?style=flat-square"/>
   </h1>
 </div>
 
 A monorepo for my personal website and projects, built with Turborepo and pnpm.
 
-## 📘 [enji.dev](https://www.enji.dev)
+## 📘 [Yulo Han 的博客网站](https://www.yulohan.cn)
 
 A personal website with a blog, project showcase, and work information.
-
-https://user-images.githubusercontent.com/95107212/210668021-fd49431f-85a3-4bd7-bf9e-09639cb38922.mp4
 
 ### Tech Stack
 
@@ -36,13 +34,13 @@ git clone <your-fork>
 Navigate to the project's root directory:
 
 ```
-cd ./enji.dev
+cd ./ylBlog
 ```
 
 Next, copy the development version of the `env` file:
 
 ```
-cp ./apps/enji.dev/env.example ./apps/enji.dev/env.local
+cp ./apps/ylBlog/env.example ./apps/ylBlog/env.local
 ```
 
 Now, you have the `env.local` file ready for configuration:
