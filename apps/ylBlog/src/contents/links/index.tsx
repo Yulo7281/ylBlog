@@ -119,6 +119,7 @@ function LinksContents() {
 
   useEffect(() => {
     fetchLinks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
