@@ -36,24 +36,28 @@ function PostFooter({ tags, category }: PostFooterProps) {
         'dark:text-slate-400'
       )}
     >
-      <div className={clsx('flex flex-wrap gap-x-1 gap-y-2')}>
-        文章分类：
-        <Link
-          href="/blog"
-          className={clsx(
-            'text-accent-600 mr-5 font-bold',
-            'dark:text-accent-400'
-          )}
-        >
-          {category}
-        </Link>
-        文章标签：
-        <div className={clsx('flex flex-wrap gap-1')}>
-          {tags.map((tag) => (
-            <Chip href="/blog" key={tag}>
-              #{tag}
-            </Chip>
-          ))}
+      <div className={clsx('flex flex-wrap gap-x-5 gap-y-2')}>
+        <div className={clsx('flex')}>
+          <span className={clsx('whitespace-nowrap')}>文章分类：</span>
+          <Link
+            href="/blog"
+            className={clsx(
+              'text-accent-600 font-bold',
+              'dark:text-accent-400'
+            )}
+          >
+            {category}
+          </Link>
+        </div>
+        <div className={clsx('flex flex-nowrap')}>
+          <span className={clsx('whitespace-nowrap')}>文章标签：</span>
+          <div className={clsx('flex flex-wrap gap-1')}>
+            {tags.map((tag) => (
+              <Chip href="/blog" key={tag}>
+                #{tag}
+              </Chip>
+            ))}
+          </div>
         </div>
       </div>
     </div>

@@ -74,26 +74,29 @@ function Sidebar({ show }: SidebarProps) {
   };
 
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src =
-      'https://cdn.jsdelivr.net/npm/twikoo@1.6.39/dist/twikoo.min.js';
-    script.async = true;
+    if (show.includes('recentComments')) {
+      const script = document.createElement('script');
+      script.src =
+        'https://cdn.jsdelivr.net/npm/twikoo@1.6.39/dist/twikoo.min.js';
+      script.async = true;
 
-    script.onload = () => {
-      window.twikoo.init({
-        envId: 'https://twikoo.qladgk.com/',
-        el: '#tcomment',
-      });
+      script.onload = () => {
+        window.twikoo.init({
+          envId: 'https://twikoo.qladgk.com/',
+          el: '#tcomment',
+        });
 
-      fetchRecentComments();
-    };
+        fetchRecentComments();
+      };
 
-    document.body.appendChild(script);
+      document.body.appendChild(script);
 
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
+      return () => {
+        document.body.removeChild(script);
+      };
+    }
+    return () => {};
+  }, [show]);
 
   const fetchArticles = async () => {
     try {
@@ -110,8 +113,8 @@ function Sidebar({ show }: SidebarProps) {
   };
 
   useEffect(() => {
-    fetchArticles();
-  }, []);
+    if (show.includes('recentArticles')) fetchArticles();
+  }, [show]);
 
   const fetchTags = async () => {
     const response = await fetch('/api/tags');
@@ -127,8 +130,8 @@ function Sidebar({ show }: SidebarProps) {
   };
 
   useEffect(() => {
-    fetchTags();
-  }, []);
+    if (show.includes('tags')) fetchTags();
+  }, [show]);
 
   const fetchCategories = async () => {
     const response = await fetch('/api/categories');
@@ -137,8 +140,8 @@ function Sidebar({ show }: SidebarProps) {
   };
 
   useEffect(() => {
-    fetchCategories();
-  }, []);
+    if (show.includes('categories')) fetchCategories();
+  }, [show]);
 
   const handleShowMore = () => {
     setShowMore(true);

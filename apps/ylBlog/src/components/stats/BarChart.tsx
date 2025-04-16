@@ -37,7 +37,7 @@ export function BarChart({ data }: BarChartProps) {
   const barMaxHeight = chartHeight - 40 - labelPadding;
 
   return (
-    <div className="w-full overflow-x-auto" ref={scrollContainerRef}>
+    <div className="w-full overflow-x-auto pb-4" ref={scrollContainerRef}>
       <div className="relative flex h-[300px] min-w-[800px] items-end justify-between px-2 pt-6">
         <div className="absolute inset-0 -z-10 mt-6 grid grid-rows-3">
           {gridValues.map((value) => (
@@ -68,7 +68,7 @@ export function BarChart({ data }: BarChartProps) {
               }}
             />
 
-            <div className="mt-2 origin-left -rotate-45 transform whitespace-nowrap text-sm">
+            <div className="mt-2 origin-left translate-y-4 -rotate-45 transform whitespace-nowrap text-sm">
               {year}
             </div>
           </div>

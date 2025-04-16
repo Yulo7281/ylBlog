@@ -192,7 +192,7 @@ function Heatmap({ data }: HeatmapProps) {
   return (
     <div className="tailwindcss-heatmap mt-5 flex max-w-fit flex-col items-end text-[10px] leading-[12px] text-neutral-700 dark:text-neutral-400">
       <div className="flex flex-row items-end">
-        <div className="mr-1 flex h-[96px] flex-col items-end justify-between text-right">
+        <div className="mr-1 flex h-[96px] flex-col items-end justify-between whitespace-nowrap text-right">
           <span>周一</span>
           <span>&nbsp;</span>
           <span>周三</span>

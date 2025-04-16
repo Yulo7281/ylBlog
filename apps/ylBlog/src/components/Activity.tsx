@@ -163,7 +163,7 @@ function Activity({ onItemClick = () => {} }: ActivityProps) {
                 'dark:text-slate-400'
               )}
             >
-              <span>{activity.activityType}</span>
+              <span>{activity.activityType === 'SHARE' ? '分享' : '互动'}</span>
               <span>{relativeTime(activity.createdAt)}</span>
             </div>
             <ActivityItem data={activity} />
