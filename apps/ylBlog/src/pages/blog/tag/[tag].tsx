@@ -113,7 +113,7 @@ export default function TagPage({ tag, posts }: TagPageProps) {
     <Page
       frontMatter={{
         title: `标签：${tag}`,
-        description: `所有与 "${tag}" 有关的文章如下`,
+        description: `所有与 "${tag}" 有关的文章如下：`,
         caption: 'Tag',
       }}
     >

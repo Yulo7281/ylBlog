@@ -113,7 +113,7 @@ export default function CategoryPage({ category, posts }: CategoryPageProps) {
     <Page
       frontMatter={{
         title: `分类：${category}`,
-        description: `所有与 "${category}" 有关的文章如下`,
+        description: `所有与 "${category}" 有关的文章如下：`,
         caption: 'Category',
       }}
     >

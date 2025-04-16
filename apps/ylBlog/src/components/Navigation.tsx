@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { useEffect, useMemo, useState } from 'react';
 
-import { GitHubIcon } from '@/components/Icons';
+import { GitHubIcon, TravellingIcon } from '@/components/Icons';
 import NavIcon from '@/components/navigations/NavIcon';
 import NavIconQuickAccess from '@/components/navigations/NavIconQuickAccess';
 import NavLink from '@/components/navigations/NavLink';
@@ -65,7 +65,6 @@ function Navbar() {
           'fm:hidden'
         )}
       />
-      <div className={clsx('h-2', [isScrolled === true && ['-mt-2']])} />
       <div className={clsx('content-wrapper-max')}>
         <div
           className={clsx(
@@ -104,6 +103,13 @@ function Navbar() {
                 href="https://github.com/Yulo7281"
                 icon={<GitHubIcon className={clsx('h-5 w-5')} />}
                 title="GitHub"
+              />
+            </li>
+            <li className={clsx('hidden', 'sm:block')}>
+              <NavIcon
+                href="https://www.travellings.cn/go.html"
+                icon={<TravellingIcon className={clsx('h-5 w-5')} />}
+                title="Travelling"
               />
             </li>
             <li className={clsx('hidden', 'sm:block')}>

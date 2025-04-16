@@ -16,7 +16,7 @@ function Blog({ posts }: BlogProps) {
     <Page
       frontMatter={{
         title: '个人博客',
-        description: '学习、笔记、生活',
+        description: '我来到，我看见，我记录。',
       }}
       headerImage={<HeaderImage />}
     >

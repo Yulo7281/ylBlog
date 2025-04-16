@@ -43,7 +43,9 @@ function ActivityItem({
 
     return (
       <div className={clsx('flex flex-wrap items-baseline gap-x-1')}>
-        <span>the</span>
+        <span className={clsx('lowercase')}>
+          {contentType.replace('POST', '文章')}
+        </span>
         <span
           className={clsx(
             'text-accent-600 font-semibold',
@@ -51,9 +53,6 @@ function ActivityItem({
           )}
         >
           {contentTitle}
-        </span>
-        <span className={clsx('lowercase')}>
-          {contentType.replace('POST', '文章')}
         </span>
         <span>收到了</span>
         {count !== 1 && (

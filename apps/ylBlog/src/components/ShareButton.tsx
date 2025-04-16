@@ -128,7 +128,7 @@ function ShareButton({ onItemClick = () => {} }: ShareButtonProps) {
                   'px-4 py-3 text-center text-[13px] text-lg font-bold'
                 )}
               >
-                Share this on
+                分享
               </div>
               <Menu.Item>
                 {({ active }) => (
@@ -155,7 +155,7 @@ function ShareButton({ onItemClick = () => {} }: ShareButtonProps) {
                 {({ active }) => (
                   <ShareItemButton active={active} onClick={handleCopy}>
                     <NoteIcon className={clsx('h-4 w-4')} />
-                    Copy link
+                    复制链接
                   </ShareItemButton>
                 )}
               </Menu.Item>

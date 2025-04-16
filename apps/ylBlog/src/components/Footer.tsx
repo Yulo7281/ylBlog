@@ -217,13 +217,13 @@ function Footer() {
                   title="此网站"
                   links={[
                     {
-                      title: '开往',
-                      href: 'https://www.travellings.cn/go.html',
+                      title: '源代码',
+                      href: 'https://github.com/Yulo7281/ylBlog',
                       isInternal: false,
                     },
                     {
-                      title: '源代码',
-                      href: 'https://github.com/Yulo7281/ylBlog',
+                      title: '开往',
+                      href: 'https://www.travellings.cn/go.html',
                       isInternal: false,
                     },
                   ]}

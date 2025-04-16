@@ -112,7 +112,7 @@ function HeaderCta({
       >
         <ButtonContactMe />
       </m.div>
-      {isFree ? (
+      {/* {isFree ? (
         <m.div
           variants={animation}
           transition={{ delay: 2.8 }}
@@ -137,7 +137,7 @@ function HeaderCta({
         <m.div variants={animation} transition={{ delay: 0.5 }}>
           <ButtonResume />
         </m.div>
-      )}
+      )} */}
     </m.div>
   );
 }

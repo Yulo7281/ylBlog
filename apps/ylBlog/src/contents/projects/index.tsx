@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
-import { GitHubIcon, ReactIcon } from '@/components/Icons';
+import { GitHubIcon, NextJsIcon } from '@/components/Icons';
 import { SectionButton } from '@/components/sections/SectionButton';
 import SectionContent from '@/components/sections/SectionContent';
 import SectionTitle from '@/components/sections/SectionTitle';
@@ -40,7 +40,7 @@ function ProjectsContents() {
             <div className={clsx('flex flex-col gap-3')}>
               <SectionButton
                 title="预览"
-                icon={<ReactIcon className={clsx('my-2 h-16 w-16')} />}
+                icon={<NextJsIcon className={clsx('my-2 h-16 w-16')} />}
                 description="本网站属于当前项目"
                 active={currentState === 'nextjsblog'}
                 onClick={() => setCurrentState('nextjsblog')}
@@ -61,7 +61,7 @@ function ProjectsContents() {
                   type="browser"
                   browserTabs={[
                     {
-                      icon: <ReactIcon className="h-4 w-4" />,
+                      icon: <NextJsIcon className="h-4 w-4" />,
                       title: 'www.yulohan.cn - nextjsblog',
                       isActive: currentState === 'nextjsblog',
                       onClick: () => setCurrentState('nextjsblog'),

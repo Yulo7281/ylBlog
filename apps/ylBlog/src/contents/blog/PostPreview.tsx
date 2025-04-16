@@ -72,7 +72,7 @@ function PostPreview({
             )}
           >
             <PinIcon className={clsx('h-5 w-5')} />
-            Pinned Post
+            置顶文章
           </div>
         )}
         <div

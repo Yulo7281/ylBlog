@@ -10,7 +10,7 @@ import PostPreview from '@/contents/blog/PostPreview';
 
 import type { TPostFrontMatter } from '@/types';
 
-const PINNED_POST = 'tailwindcss-note';
+const PINNED_POST = 'the-2023-retrospective';
 const POSTS_PER_PAGE = 10;
 
 export type BlogContentsProps = {
@@ -183,7 +183,7 @@ function BlogContents({ posts }: BlogContentsProps) {
                 key={slug}
                 className={clsx(
                   'mb-8 flex items-start gap-4',
-                  'md:mb-4 md:gap-6'
+                  'last:mb-0 md:mb-4 md:gap-6'
                 )}
               >
                 <div className={clsx('flex-1')}>
@@ -206,7 +206,7 @@ function BlogContents({ posts }: BlogContentsProps) {
       </div>
 
       {/* 分页按钮 */}
-      <div className="mt-8 flex flex-col items-center">
+      <div className={clsx('mt-4 flex flex-col items-center', 'md:mt-8')}>
         <div className="flex justify-center space-x-2">
           <button
             type="button"

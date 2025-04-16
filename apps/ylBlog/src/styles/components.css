@@ -7,7 +7,7 @@
   }
 
   .content-wrapper-max {
-    @apply mx-auto max-w-[120rem];
+    @apply mx-auto max-w-[90rem];
   }
 
   .background-grid {

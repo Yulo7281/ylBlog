@@ -7,7 +7,7 @@ function Projects() {
       frontMatter={{
         title: '宝藏项目',
         description: '一些项目的展示。',
-        caption: 'More',
+        caption: '更多',
       }}
     >
       <ProjectsContents />

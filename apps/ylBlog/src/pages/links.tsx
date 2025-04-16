@@ -7,7 +7,7 @@ function Links() {
       frontMatter={{
         title: '友情链接',
         description: '与各位博主共同进步。',
-        caption: 'More',
+        caption: '更多',
       }}
     >
       <LinksContents />

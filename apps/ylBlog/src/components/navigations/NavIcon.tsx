@@ -26,8 +26,7 @@ function NavIcon({ href, icon, title, label = '' }: NavIconProps) {
           ],
         ]
       )}
-      aria-label={`My ${title} profile`}
-      title={`My ${title} profile`}
+      aria-label={`${title} 轮廓`}
       target="_blank"
       rel="noreferrer nofollow"
     >
