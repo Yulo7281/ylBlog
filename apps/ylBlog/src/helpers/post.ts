@@ -5,7 +5,7 @@ import type { TPostFrontMatter, TPostOgImage } from '@/types';
 
 export const formatDate = (date: string) => {
   if (dayjs(date).isValid()) {
-    return dayjs(date, 'YYYY-MM-DD').format('MMMM D, YYYY');
+    return dayjs(date, 'YYYY-MM-DD').format('YYYY年MM月DD日');
   }
 
   return date;
@@ -20,15 +20,15 @@ export const formatDateRelative = (date: string) => {
     }
 
     if (days > 1) {
-      return `${days} days ago`;
+      return `${days} 天前`;
     }
 
     if (days === 1) {
-      return `Yesterday`;
+      return `昨天`;
     }
 
     if (days === 0) {
-      return `Today`;
+      return `今天`;
     }
   }
 

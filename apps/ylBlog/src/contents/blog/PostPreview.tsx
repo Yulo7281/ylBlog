@@ -82,9 +82,7 @@ function PostPreview({
           )}
         >
           <div className={clsx('flex gap-1')}>
-            <time dateTime={date} className={clsx('first-letter:uppercase')}>
-              {formatDateRelative(date)}
-            </time>
+            <time dateTime={date}>{formatDateRelative(date)}</time>
             <span>&middot;</span>
             <span>{formatLang(lang)}</span>
           </div>
