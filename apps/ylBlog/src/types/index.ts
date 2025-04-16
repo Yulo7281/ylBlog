@@ -27,7 +27,7 @@ export type TPageOgImage = Partial<
 export type TPostFrontMatter = TBaseFrontMatter & {
   title: string;
   date: string;
-  lang: 'id' | 'en';
+  lang: 'zh' | 'zh-TW' | 'en';
   tags: Array<string>;
   category: string;
   wordCount?: number;
