@@ -1,0 +1,131 @@
+---
+title: Next.js搭建博客网站手记（二）
+description: 手把手教你搭建个人博客网站——创建一个免费的mongoDB数据库(MongoDB Atlas)。
+lang: zh
+date: '2025-04-17'
+tags:
+  - 博客搭建
+  - 数据库
+category: 教程
+---
+
+import Image from '@/components/mdx/Image';
+
+## 引言
+
+无论是博客的数据统计功能，还是集成的Twikoo评论系统，均需要使用到数据库。而MongoDB Atlas 是 MongoDB Inc 提供的 MongoDB 数据库托管服务。免费账户可以永久使用 500 MiB 的数据库，足够我们个人博客网站使用。
+
+## 一、创建MongoDB数据库全流程
+
+### 1.1 注册账号并登录
+
+如果已有MongoDB账号，可直接[登录](https://account.mongodb.com/account/login?nds=true)。没有账号的话，先进行[注册](https://www.mongodb.com/cloud/atlas/register)。
+
+### 1.2 创建项目
+
+成功登录后，进入 Projects 页面，点击按钮 New Project 创建一个新项目。
+
+填写项目名称（标签选填，之后亦可添加），下一步：
+
+<Image
+  src={`${process.env.NEXT_PUBLIC_NPM_IMAGES}/blog/how-to-build-blog-2/mongodb_project_name.png`}
+  alt="项目名称填写"
+  width={873}
+  height={527}
+/>
+
+为项目分配成员：
+
+<Image
+  src={`${process.env.NEXT_PUBLIC_NPM_IMAGES}/blog/how-to-build-blog-2/mongodb_project_members.png`}
+  alt="分配成员"
+  width={873}
+  height={527}
+/>
+
+### 1.3 创建免费集群
+
+项目创建成功后，点击 Build a Cluster 按钮创建一个免费的集群。
+
+集群名称按自己的需求填写，集群部署的位置最好选择亚洲地区，其他配置默认即可。点击 Create Deployment 按钮后，开始初始化集群，需要稍微等待一段时间。
+
+<Image
+  src={`${process.env.NEXT_PUBLIC_NPM_IMAGES}/blog/how-to-build-blog-2/mongodb_cluster_config.png`}
+  alt="创建集群"
+  width={873}
+  height={527}
+/>
+
+### 1.4 添加数据库用户
+
+集群创建完成后，进入 Database Access 页面， 点击 Add New Database User 按钮添加数据库用户。
+
+Authentication Method 选 Password，在 Password Authentication 下设置数据库用户名和密码，建议点击 Auto Generate 自动生成一个不含特殊符号的强壮密码并妥善保存（之后连接集群时需要使用）。点击 Database User Privileges 下方的 Add Built In Role，Select Role 选择 Atlas Admin，最后点击 Add User。
+
+<Image
+  src={`${process.env.NEXT_PUBLIC_NPM_IMAGES}/blog/how-to-build-blog-2/mongodb_user_config.png`}
+  alt="添加数据库用户"
+  width={873}
+  height={527}
+/>
+
+### 1.5 设置访问白名单
+
+进入 Network Access 页面，点击 Add IP Address 添加网络白名单。
+
+因为 Vercel / Netlify / Lambda 的出口地址不固定，因此 Access List Entry 输入 0.0.0.0/0（允许所有 IP 地址的连接）即可。如果 Twikoo 部署在自己的服务器上，这里可以填入固定 IP 地址。点击 Confirm 保存。
+
+<Image
+  src={`${process.env.NEXT_PUBLIC_NPM_IMAGES}/blog/how-to-build-blog-2/mongodb_network_config.png`}
+  alt="添加数据库用户"
+  width={873}
+  height={527}
+/>
+
+### 1.6 连接集群
+
+进入 Database 页面，点击 Connect 按钮进入连接页面。
+
+连接方式选择 Compass，根据自己电脑的系统下载相应的 MongoDB 数据库可视化工具——MongoDB Compass。记录数据库连接字符串（这个字符串就是项目中需要用到的数据库链接），请将连接字符串中的 **&lt;db_username&gt;:&lt;db_password&gt;** 修改为刚刚创建的数据库 用户名:密码。
+注意：尖括号&lt;&gt;亦需替换。
+
+<Image
+  src={`${process.env.NEXT_PUBLIC_NPM_IMAGES}/blog/how-to-build-blog-2/mongodb_connect.png`}
+  alt="添加数据库用户"
+  width={873}
+  height={527}
+/>
+
+> 连接字符串包含了连接到 MongoDB 数据库的所有信息，一旦泄露会导致评论被任何人添加、修改、删除，并有可能获取你的 SMTP、图床 token 等信息。请妥善记录这一字符串，之后需要填入到 Twikoo 的部署平台里。
+
+## 二、MongoDB Compass的安装与使用
+
+### 2.1 下载
+
+方法一：可视化工具可以根据上述操作1.6的方式进行下载
+
+方法二：MongoDB [官网下载](https://www.mongodb.com/try/download/compass)
+
+### 2.2 安装
+
+下载完成后，解压文件并运行安装程序。MongoDB Compass 的 安装配置相对简单，可自行选择安装路径，其他配置默认即可。
+
+### 2.3 使用
+
+安装完成后，打开 MongoDB Compass，进入主页面，点击 Add New Collectioon 按钮建立新的数据库连接。
+
+<Image
+  src={`${process.env.NEXT_PUBLIC_NPM_IMAGES}/blog/how-to-build-blog-2/mongodb_compass_connect.png`}
+  alt="Compass连接数据库"
+  width={873}
+  height={527}
+/>
+
+成功连接数据库后，如果有数据的话，就可以直接查看并操作数据了。
+
+<Image
+  src={`${process.env.NEXT_PUBLIC_NPM_IMAGES}/blog/how-to-build-blog-2/mongodb_compass_use.png`}
+  alt="Compass使用"
+  width={873}
+  height={527}
+/>

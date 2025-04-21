@@ -1,0 +1,222 @@
+---
+title: Next.js搭建博客网站手记（四）
+description: 手把手教你搭建个人博客网站——使用github + npm实现图床功能。
+lang: zh
+date: '2025-04-19'
+tags:
+  - 博客搭建
+  - npm
+category: 教程
+---
+
+import Image from '@/components/mdx/Image';
+
+## 引言
+
+在Web开发中，图片资源管理常陷于两难：付费图床成本高，免费方案不稳定。而本文将介绍一套**零成本**、**自动化**的工程化解决方案——通过npm包托管图片资源，借助GitHub Actions实现**提交即发布**，配合npm CDN获得全球加速。这种方案不仅突破传统图床的存储限制，更将版本控制、CI/CD等工程实践融入资源管理，让Markdown中的每一张图片都拥有可追溯的"数字基因"。
+
+## 一、图床方案对比
+
+### 1.1 常见图床方案对比
+
+| 方案              | 优点                 | 缺点           | 适用场景          |
+| ----------------- | -------------------- | -------------- | ----------------- |
+| 七牛云/阿里云OSS  | 稳定高速、专业管理   | 收费、需要备案 | 企业级应用        |
+| GitHub + jsDelivr | 免费、无需服务器     | 国内访问不稳定 | 个人小项目        |
+| GitHub Pages      | 完全免费、无缝集成   | 存储空间有限   | 文档类项目        |
+| GitHub + npm      | 版本控制、自动化管理 | 需发布公开包   | 技术博客/开源项目 |
+
+### 1.2 为什么选择GitHub+npm？
+
+- 天然版本控制：每个图片变更都有commit记录
+
+- 免费CDN加速：npm默认使用unpkg.com的全球CDN
+
+- 无缝CI/CD：GitHub Actions实现自动化工作流
+
+- 前端友好：直接通过npm安装使用资源
+
+## 二、npm图床实现详解
+
+### 2.1 基础架构
+
+```bash
+your-image-bed/
+├── images/          # 图片资源目录
+│   ├── avatar.png
+│   └── banner.jpg
+├── package.json     # npm包配置
+└── .github/         # GitHub Actions配置
+    └── workflows/
+        └── deploy.yml
+```
+
+### 2.2 实现步骤
+
+1.[注册npm账号](https://www.npmjs.com/signup/)并登录。
+
+2.创建GitHub仓库，用来存放图片。以下会以[AssetsRepo]指代这个静态资源仓库。
+
+3.创建token。
+
+访问Github → 头像（右上角） → Settings → Developer Settings → Personal access tokens → personal-access-tokens，点击 Generate new token 按钮，创建的Token名称随意，过期时间自行选择，但必须选择Repository。
+
+<Image
+  src={`${process.env.NEXT_PUBLIC_NPM_IMAGES}/blog/how-to-build-blog-4/github_token_create.png`}
+  alt="token创建"
+  width={873}
+  height={527}
+/>
+
+token创建成功后需要妥善保管，只会显示这一次，之后将无法查看，所以请务必牢记。如果忘记的话只能重新创建重新配置了。
+
+<Image
+  src={`${process.env.NEXT_PUBLIC_NPM_IMAGES}/blog/how-to-build-blog-4/github_token_success.png`}
+  alt="token创建成功"
+  width={873}
+  height={527}
+/>
+
+4.找到我们之前创建的图床仓库，在本地合适的位置把它clone下来。
+
+```bash
+git clone git@github.com:[username]/[AssetsRepo].git
+#或者
+git clone https://github.com/[username]/[AssetsRepo].git
+```
+
+4.在 clone 下来的[AssetsRepo]文件夹内打开终端，输入以下指令切换回原生源。
+
+```bash
+npm config set registry https://registry.npmjs.org
+```
+
+5.添加本地 npm 用户设置。
+
+```bash
+# 仅第一次使用需要添加用户，之后会提示你输入你的npm账号密码以及注册邮箱
+npm adduser
+# 非第一次使用直接登录即可，之后会提示你输入你的npm账号密码以及注册邮箱
+npm login
+```
+
+6.运行 npm 初始化指令，把整个图床仓库打包，按照指示进行配置，注意需要事先确认你的包名没有和别人已发布的包重复，可以在 npm 官网搜索相应包名，搜不到就说明还没被占用。
+
+```bash
+npm init
+```
+
+<Image
+  src={`${process.env.NEXT_PUBLIC_NPM_IMAGES}/blog/how-to-build-blog-4/npm_publish.png`}
+  alt="npm发布"
+  width={873}
+  height={527}
+/>
+
+最后会输出一段 package.json，请求确认，输入 yes 即可。
+
+7.然后输入发布指令，我们就可以把包发布到 npm 上了。
+
+```bash
+npm publish
+```
+
+8.图片访问。
+
+假设我在[AssetsRepo]仓库里存放图片的路径为AssetsRepo/img/demo.png，那么访问图片路径如下所示：
+
+```bash
+# jsDelivr+github链接
+https://cdn.jsdelivr.net/gh/[GithubUserName]/[AssetsRepo]/img/demo.png
+# jsDelivr+npm链接
+https://npm.elemecdn.com/[NpmPackageName]/img/demo.png
+```
+
+jsDelivr+Npm依然有100MB的包大小限制，但是NPM有丰富的国内节点，可以挑选一个使用。以下推荐几个目前有效的CDN：
+
+```bash
+【jsd出品，网宿国内节点】
+https://cdn.jsdelivr.net/npm/:package@:version/:file
+【unpkg 自建】
+https://unpkg.com/:package@:version/:file
+【渺软公益CDN】
+https://jsd.onmicrosoft.cn/npm/:package@:version/:file
+```
+
+如果上述CDN失效的话，可自行在知乎论坛或者其他程序员论坛里搜搜，看有没有用爱发电的服务吧。
+
+## 三、GitHub Actions自动化部署
+
+如果每次都要在本地进行npm publish的话，npm的提交是整个包一起上传的，不存在增量更新，耗时不说，而且还往往需要架梯子才能正常上传。所以我们可以把它交给github action来完成。
+
+### 3.1 自动化流程图
+
+<Image
+  src={`${process.env.NEXT_PUBLIC_NPM_IMAGES}/blog/how-to-build-blog-4/npm_auto_workflow.png`}
+  alt="npm自动部署流程"
+  width={873}
+  height={527}
+/>
+
+### 3.2 完整workflow配置
+
+1.生成NPM_TOKEN
+
+进入npm官网 → Access Tokens 页面，点击 Generate New Token，权限选择：Automation。Token创建成功后需要妥善保管，只会显示这一次，之后将无法查看，所以请务必牢记。如果忘记的话只能重新创建重新配置了。
+
+2.添加GitHub仓库Secrets
+
+进入git仓库[AssetsRepo] → Settings → Secrets and variables → Action 页面，点击 New repository secret 按钮添加GitHub仓库Secrets。
+Name填写NPM_TOKEN，Secret填写上一步在NPM生成的NPM_TOKEN的值。
+
+<Image
+  src={`${process.env.NEXT_PUBLIC_NPM_IMAGES}/blog/how-to-build-blog-4/github_secret_add.png`}
+  alt="GitHub Secrets"
+  width={873}
+  height={527}
+/>
+
+3.在本地的[AssetsRepo]文件夹下新建文件[AssetsRepo]/.github/workflows/autopublish.yml
+
+```yml
+name: Node.js Package
+# 监测图床分支，2020年10月后github新建仓库默认分支改为main，记得更改
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish-npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          registry-url: https://registry.npmjs.org/
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+```
+
+4.自动部署
+在本地的[AssetsRepo]文件夹下打开终端，运行以下指令，上传新增内容至github，即可触发部署。
+
+```bash
+# 将更改提交
+git add .
+git commit -m "npm publish"
+# 更新package版本号
+npm version patch
+# 推送至github触发action
+git push
+```
+
+> 此处的四行指令顺序严格。
+>
+> 每次更新npm图床都需要先修改[AssetsRepo]\package.json里的version，也就是版本号。
+> 而npm version patch即为更新package.json里的版本号的指令，效果是末尾版本号+1，例如0.0.1=>0.0.2、1.1.3=>1.1.4。
+> 免去了打开package.json再修改版本号的麻烦（大版本更新还是需要手动改的）。
+>
+> 再次强调，更新npm图床务必要记得更新package.json里的版本号！

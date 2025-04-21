@@ -1,0 +1,159 @@
+---
+title: Next.js搭建博客网站手记（三）
+description: 手把手教你搭建个人博客网站——集成Twikoo评论系统。
+lang: zh
+date: '2025-04-18'
+tags:
+  - 博客搭建
+  - Twikoo
+category: 教程
+---
+
+import Image from '@/components/mdx/Image';
+
+## 引言
+
+为博客添加评论系统能让读者与作者形成双向对话，通过留言反馈可验证技术观点准确性，不同开发者的实践经验碰撞常能激发新思路。本文详细记录我在Next.js项目中集成Twikoo评论系统的全过程，为开发者提供可复用的技术方案。
+
+## 一、评论系统方案选择
+
+### 1.1 常见方案对比
+
+| 方案类型   | 代表产品      | 优点                                                                       | 缺点                                            |
+| ---------- | ------------- | -------------------------------------------------------------------------- | ----------------------------------------------- |
+| 第三方托管 | Disqus/Giscus | - 零开发成本<br/>- 自带管理后台                                            | - 隐私问题（加载第三方脚本）<br/>- 商业方案收费 |
+| 自建后端   | Node.js+MySQL | - 完全自主控制数据<br/>- 高度可定制化                                      | - 开发成本较高<br/>- 需要维护服务器             |
+| 静态集成   | Hexo-Valine   | - 开箱即用 <br/>- 与生成器深度集成                                         | - 框架绑定性强<br/>- 扩展性受限                 |
+| Serverless | Twikoo/Waline | - 无需服务器运维<br/>- 数据自主存储（使用MongoDB/Vercel）<br/>- 轻量级集成 | - 需要基础云服务知识<br/>- 免费额度有限制       |
+
+### 1.2 为什么选择Twikoo？
+
+- **成本优势**：MongoDB免费仓库 + Vercel免费部署
+
+- **技术匹配**：完美契合Next.js的SSG/ISR特性
+
+- **数据透明**：评论数据自主存储在MongoDB
+
+- **扩展能力**：支持邮件/微信通知、反垃圾过滤
+
+- **风格适配**：更适合技术博客的极简风格
+
+## 二、Next.js集成Twikoo全流程
+
+推荐教程：1、[Twikoo 文档](https://twikoo.js.org/)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2、[视频教程](https://www.bilibili.com/video/BV1Fh411e7ZH/?vd_source=d6798b70aeef51f2caccf5de6ff93d55)
+
+### 2.1 创建MongoDB数据库
+
+创建MongoDB数据库的具体步骤，可跳转本站博客 [Next.js搭建博客网站手记（二）](/blog/how-to-build-blog-3)进行查看
+
+### 2.2 部署Twikoo到Vercel
+
+1.申请 [Vercel](https://vercel.com/signup) 账号，使用 GitHub/GitLab/Bitbucket 账号注册登录。
+
+2.点击 [Deploy](https://vercel.com/import/project?template=https://github.com/twikoojs/twikoo/tree/main/src/server/vercel-min) 将 Twikoo 一键部署到 Vercel
+
+3.进入 Settings → Environment Variables，添加环境变量 **MONGODB_URI**，值为前面记录的数据库连接字符串 + 集合名称（不拼接集合名称的话，Twikoo 会连接到默认的名为 test 的数据库），比如：
+
+```Markdown
+mongodb+srv://<db_user>:<db_password>@xxx.xxx.mongodb.net/<collection_name>
+```
+
+<Image
+  src={`${process.env.NEXT_PUBLIC_NPM_IMAGES}/blog/how-to-build-blog-3/vercel_enviroment.png`}
+  alt="Vercel环境变量"
+  width={873}
+  height={527}
+/>
+
+4.进入 Settings → Deployment Protection，设置 Vercel Authentication 为 Disabled，并 Save
+
+<Image
+  src={`${process.env.NEXT_PUBLIC_NPM_IMAGES}/blog/how-to-build-blog-3/vercel_deployment.png`}
+  alt="Vercel环境变量"
+  width={873}
+  height={527}
+/>
+
+5.进入 Deployments , 然后在任意一项后面点击更多（三个点） , 然后点击 Redeploy , 最后点击下面的 Redeploy
+
+<Image
+  src={`${process.env.NEXT_PUBLIC_NPM_IMAGES}/blog/how-to-build-blog-3/vercel_redeploy.png`}
+  alt="Vercel环境变量"
+  width={873}
+  height={527}
+/>
+
+6.进入 Project，如果环境配置正确，可以看到 “Twikoo 云函数运行正常” 的提示，Domains（包含 https:// 前缀，例如 https://xxx.vercel.app）即为您的环境 id
+
+<Image
+  src={`${process.env.NEXT_PUBLIC_NPM_IMAGES}/blog/how-to-build-blog-3/vercel_project.png`}
+  alt="Vercel环境变量"
+  width={873}
+  height={527}
+/>
+
+### 2.3 前端集成
+
+Twikoo 官方给出的非 Hexo 的前端，可以通过 CDN 接入。
+
+在 React 或者 Next.js 中接入，我们可以自定义一个 Component 在组件首次加载的时候执行接入：
+
+import CodeGroup from '@/components/mdx/CodeGroup';
+
+<CodeGroup variant="file">
+
+```html {copy:true} {footer:true} {title:index.html}
+<div id="tcomment"></div>
+<script src="https://cdn.jsdelivr.net/npm/twikoo@1.6.39/dist/twikoo.all.min.js"></script>
+<script>
+  twikoo.init({
+    envId: '您的云环境id', // 腾讯云环境填 envId；Vercel 环境填地址（https://xxx.vercel.app）
+    el: '#tcomment', // 容器元素
+    // region: 'ap-guangzhou', // 环境地域，默认为 ap-shanghai，腾讯云环境填 ap-shanghai 或 ap-guangzhou；Vercel 环境不填
+    // path: location.pathname, // 用于区分不同文章的自定义 js 路径，如果您的文章路径不是 location.pathname，需传此参数
+    // lang: 'zh-CN', // 用于手动设定评论区语言，支持的语言列表 https://github.com/twikoojs/twikoo/blob/main/src/client/utils/i18n/index.js
+  });
+</script>
+```
+
+```tsx {copy:true} {footer:true} {title:TwikooComments.tsx}
+import { useEffect } from 'react';
+
+interface TwikooConfig {
+  envId: string;
+  el: string;
+}
+
+interface Twikoo {
+  init: (config: TwikooConfig) => void;
+}
+
+function TwikooComments() {
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src =
+      'https://cdn.jsdelivr.net/npm/twikoo@1.6.39/dist/twikoo.min.js';
+    script.async = true;
+
+    script.onload = () => {
+      const { twikoo } = window as unknown as { twikoo: Twikoo };
+      twikoo.init({
+        envId: '您的云环境id',
+        el: '#tcomment',
+      });
+    };
+
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  return <div id="tcomment" />;
+}
+
+export default TwikooComments;
+```
+
+</CodeGroup>
