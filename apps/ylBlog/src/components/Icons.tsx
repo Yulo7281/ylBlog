@@ -1,5 +1,23 @@
 import type { ComponentProps } from 'react';
 
+export function LogoIcon({ ...props }: ComponentProps<'svg'>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      role="img"
+      {...props}
+    >
+      <path
+        d="M15 8 L7 8 L7 1L3 1 L3 23 L7 23 L7 11.5L17 11.5 L17 1 L21 1 L21 23L17 23 L17 15 L9 15"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+    </svg>
+  );
+}
+
 export function LightIcon({ ...props }: ComponentProps<'svg'>) {
   return (
     <svg

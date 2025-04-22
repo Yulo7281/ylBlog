@@ -9,7 +9,7 @@ import dayjs from '@/utils/dayjs';
 function LastUpdate() {
   return (
     <>
-      <a
+      {/* <a
         href="https://github.com/enjidev/enji.dev"
         target="_blank"
         rel="noreferrer nofollow"
@@ -17,7 +17,7 @@ function LastUpdate() {
       >
         <span>查看作者原仓库</span>
       </a>
-      <br />
+      <br /> */}
       <Link
         href="/update"
         rel="noreferrer nofollow"
@@ -25,7 +25,7 @@ function LastUpdate() {
       >
         <span>查看 ylBlog 更新</span>
       </Link>
-      <br />
+      {/* <br />
       <a
         href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh-hans"
         target="_blank"
@@ -33,7 +33,7 @@ function LastUpdate() {
         className={clsx('hover:underline')}
       >
         <span>CC BY-NC-ND</span>
-      </a>
+      </a> */}
     </>
   );
 }
@@ -240,7 +240,7 @@ function Footer() {
         >
           <div className={clsx('font-semibold')}>
             &copy; {dayjs().format('YYYY')}, yulohan.cn 版权所有
-            <div>
+            {/* <div>
               <span>
                 ICP:
                 <a
@@ -270,7 +270,7 @@ function Footer() {
                   陕公网安备xxxxxxxx
                 </a>
               </span>
-            </div>
+            </div> */}
           </div>
           <div className={clsx('text-slate-500', 'dark:text-slate-400')}>
             <LastUpdate />
