@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import TwikooComments from '@/components/TwikooComments';
 
 import ApplyFormat from './ApplyFormat';
-import AvatarCircles from './AvatarCircles';
+// import AvatarCircles from './AvatarCircles';
 import Disclaimer from './Disclaimer';
 
 type WebsiteItem = {
@@ -29,7 +29,7 @@ function GridList({
   items: WebsiteItem[];
 }) {
   return (
-    <div className="mt-8">
+    <div className="mt-9 first:mt-0">
       <h2 className="mb-4 text-xl font-bold">{`${category} (${items.length})`}</h2>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {items.map((site) => (
@@ -98,7 +98,7 @@ function GridList({
 function LinksContents() {
   const categories = ['推荐', '技术', '生活'];
 
-  const [Websites, setWebsites] = useState<WebsiteItem[]>([]);
+  // const [Websites, setWebsites] = useState<WebsiteItem[]>([]);
   const [groupedWebsites, setGroupedWebsites] = useState<AllWebsites[]>([]);
 
   const fetchLinks = async () => {
@@ -106,7 +106,7 @@ function LinksContents() {
       const response = await fetch('/api/links');
       const data = await response.json();
 
-      setWebsites(data);
+      // setWebsites(data);
       const res = categories.map((category) => ({
         category,
         items: data.filter((site) => site.category === category),
@@ -124,10 +124,10 @@ function LinksContents() {
 
   return (
     <div className={clsx('content-wrapper')}>
-      <AvatarCircles
+      {/* <AvatarCircles
         numPeople={99}
         avatarUrls={Websites.slice(0, 10).map((site) => site.avatar)}
-      />
+      /> */}
 
       {groupedWebsites.map((group) => (
         <GridList

@@ -19,7 +19,7 @@ function TwikooComments() {
     script.onload = () => {
       const { twikoo } = window as unknown as { twikoo: Twikoo };
       twikoo.init({
-        envId: 'https://twikoo-ylblog.vercel.app',
+        envId: 'https://twikoo.yulohan.cn/',
         el: '#tcomment',
       });
     };

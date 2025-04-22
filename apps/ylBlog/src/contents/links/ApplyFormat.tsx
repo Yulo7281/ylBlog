@@ -13,7 +13,7 @@ export default function ApplyFormat() {
             网站地址（要求博客地址，请勿提交个人主页）：https://www.yulohan.cn/
             <br />
             头像图片url（请提供尽可能清晰的图片，我会上传到我自己的图床）：
-            {process.env.NEXT_PUBLIC_NPM_IMAGES}/avatar.jpg
+            {process.env.NEXT_PUBLIC_NPM_IMAGES}/avatar_1745353396147.jpg
             <br />
             描述：一名小小的计算机爱好者
             <br />
