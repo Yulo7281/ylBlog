@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { useRouter } from 'next/router';
 
 import TableOfContents from '@/components/TableOfContents';
 import TwikooComments from '@/components/TwikooComments';
@@ -14,6 +15,9 @@ function PageWithMDX({
   tableOfContents,
   children = null,
 }: PropsWithChildren<PageWithMDXProps>) {
+  const router = useRouter();
+  const isShow = !router.pathname.includes('work');
+
   return (
     <div
       className={clsx(
@@ -42,7 +46,7 @@ function PageWithMDX({
             </div>
           </div>
           {/* Twikoo评论 */}
-          <TwikooComments />
+          {isShow && <TwikooComments />}
         </div>
 
         {/* 右侧 -- 目录 */}
